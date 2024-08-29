@@ -86,6 +86,7 @@ class Solution:
 # 27. [Remove Element](https://leetcode.com/problems/remove-element/)
 
 双指针: [Course link](https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
+用快慢指针，快指针遍历全list，慢指针仅在快指针的数值不等于val的时候前进，以保存非val的数值以及不是val的list长度
 
 ```
 class Solution:
@@ -97,4 +98,26 @@ class Solution:
                 slow+=1
             fast+=1
         return slow
+```
+
+# 977. [Squares of a Sorted Array](https://leetcode.com/problems/squares-of-a-sorted-array/)
+
+双指针
+
+```
+class Solution:
+    def sortedSquares(self, nums: List[int]) -> List[int]:
+        left, right = 0, len(nums)-1
+        res = []
+        while left <= right:
+            left_val = nums[left] ** 2
+            right_val = nums[right] ** 2
+            if left_val < right_val:
+                res.append(right_val)
+                right -= 1
+            else:
+                res.append(left_val)
+                left += 1
+        return res[::-1]
+        
 ```
