@@ -85,3 +85,28 @@ class MyLinkedList:
             current.next = current.next.next
             self.len -= 1
 ```
+
+## 206. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)
+
+[Course Link](https://programmercarl.com/0206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.html)
+
+有点绕脑子，建议画一画来理清思路。重点需要存储指向下一个 node 的指针（current.next），不然会被覆盖。还需要存一下当前的 node 作为前一个 node，因为需要反转 （current.next = pre）
+
+```
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        current = head
+        pre = None
+        while current:
+            tmp = current.next
+            current.next = pre
+            pre = current
+            current = tmp
+        return pre
+
+```
