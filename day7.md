@@ -4,7 +4,7 @@
 
 [Course Link](https://programmercarl.com/0454.%E5%9B%9B%E6%95%B0%E7%9B%B8%E5%8A%A0II.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE)
 
-defaultdict 在字典里没有相应 key 的时候会以默认 type （这里是int） 创建 key: value对，而不像用 dict() 会报错，因此更高校一些
+defaultdict 在字典里没有相应 key 的时候会以默认 type （这里是int） 创建 key: value对，而不像用 dict() 会报错，因此更高效一些
 
 ```
 class Solution:
