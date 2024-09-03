@@ -79,3 +79,35 @@ class Solution:
 ## 18. [4Sum](https://leetcode.com/problems/4sum/)
 
 [Course Link](https://programmercarl.com/0018.%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C.html)
+
+和上一题 3Sum 一个做法，但要多注意一层跳过重复元素。同样类型的题，再多个数（5Sum，6Sum。。。）都是一样的，只是时间复杂度会上升，3Sum是 O(n^2)，4Sum是 O(n^3)，以此类推。
+
+```
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        nums.sort()
+        res = []
+        for i in range(len(nums)-2):
+            if i>0 and nums[i-1]==nums[i]:
+                continue
+            for j in range(i+1, len(nums)-1):
+                if j>i+1 and nums[j-1]==nums[j]:
+                    continue
+                left, right = j+1, len(nums)-1
+                while left<right:
+                    sum_ = nums[i]+nums[j]+nums[left]+nums[right]
+                    if sum_>target:
+                        right-=1
+                    elif sum_<target:
+                        left+=1
+                    else:
+                        res.append([nums[i],nums[j],nums[left],nums[right]])
+                        left+=1
+                        right-=1
+                        while left<right and nums[left-1]==nums[left]:
+                            left+=1
+                        while left<right and nums[right+1]==nums[right]:
+                            right-=1
+        return res
+
+```
