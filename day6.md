@@ -46,3 +46,19 @@ class Solution:
                 return True
         return False
 ```
+
+## 1. [Two Sum](https://leetcode.com/problems/two-sum/)
+
+[Course Link](https://programmercarl.com/0001.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE)
+
+用 map 可以更方便快捷的查找是否存在我们想要找的元素
+
+```
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        record = dict()
+        for i in range(len(nums)):
+            if nums[i] in record.keys():
+                return [i, record[nums[i]]]
+            record[target - nums[i]] = i
+```
