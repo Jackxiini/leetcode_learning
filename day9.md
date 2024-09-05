@@ -21,3 +21,19 @@ class Solution:
         s = s[::-1]
         return ' '.join([word[::-1] for word in s.split()])
 ```
+
+## [右旋字符串](https://kamacoder.com/problempage.php?pid=1065)
+
+[Course Link](https://programmercarl.com/kama55.%E5%8F%B3%E6%97%8B%E5%AD%97%E7%AC%A6%E4%B8%B2.html#%E6%80%9D%E8%B7%AF)
+
+```
+k = int(input())
+s = input()
+
+def rotate_string(k, s):
+    len_s = len(s)
+    move = k % len_s
+    return s[-move:] + s[:len_s-move]
+
+print(rotate_string(k, s))
+```
