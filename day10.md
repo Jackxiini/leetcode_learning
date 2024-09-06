@@ -89,3 +89,44 @@ class MyStack:
 # param_3 = obj.top()
 # param_4 = obj.empty()
 ```
+
+## 20. [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+
+[Course Link](https://programmercarl.com/0020.%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
+
+栈的经典应用
+
+```
+class Solution:
+    def isValid(self, s: str) -> bool:
+        book = {'(':')','[':']','{':'}'}
+        stack = []
+        for i in s:
+            if i in book.keys():
+                stack.append(book[i])
+            else:
+                if stack and i == stack[-1]:
+                    stack.pop()
+                else:
+                    return False
+                    
+        return True if not stack else False
+```
+
+## 1047. [Remove All Adjacent Duplicates In String](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/)
+
+[Course Link](https://programmercarl.com/1047.%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E7%9B%B8%E9%82%BB%E9%87%8D%E5%A4%8D%E9%A1%B9.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
+
+另一题栈的经典应用
+
+```
+class Solution:
+    def removeDuplicates(self, s: str) -> str:
+        stack = []
+        for i in s:
+            if stack and i == stack[-1]:
+                stack.pop()
+            else:
+                stack.append(i)
+        return ''.join(stack)
+```
