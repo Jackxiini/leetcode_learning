@@ -37,3 +37,55 @@ class MyQueue:
 # param_3 = obj.peek()
 # param_4 = obj.empty()
 ```
+
+## 225. [Implement Stack using Queues](https://leetcode.com/problems/implement-stack-using-queues/)
+
+[Course Link](https://programmercarl.com/0225.%E7%94%A8%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
+
+Python里得用 deque 来模拟队列，top里不要用 self.que_in[-1] 来获取 top 值因为这还是用到了栈的方法，可以复用 pop里的代码，再把pop出去的append回去。pop里的代码可以用 que_in, que_out 对换的方式来简化（不用把数挪来挪去）。
+
+```
+from collections import deque
+
+class MyStack:
+
+    def __init__(self):
+        self.que_in = deque()
+        self.que_out = deque()
+
+    def push(self, x: int) -> None:
+        self.que_in.append(x)
+
+    def pop(self) -> int:
+        if self.empty():
+            return None
+
+        for _ in range(len(self.que_in)-1):
+            self.que_out.append(self.que_in.popleft())
+        self.que_in, self.que_out = self.que_out, self.que_in
+
+        return self.que_out.popleft()
+
+    def top(self) -> int:
+        if self.empty():
+            return None
+
+        for _ in range(len(self.que_in)-1):
+            self.que_out.append(self.que_in.popleft())
+        self.que_in, self.que_out = self.que_out, self.que_in
+        tmp = self.que_out.popleft()
+        self.que_in.append(tmp)
+        
+        return tmp
+
+    def empty(self) -> bool:
+        return not (self.que_in or self.que_out)
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
+```
