@@ -37,3 +37,34 @@ def rotate_string(k, s):
 
 print(rotate_string(k, s))
 ```
+
+## 28. [Find the Index of the First Occurrence in a String](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/description/)
+
+[Course Link](https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
+
+重要算法 KMP，得多看几遍，比较难
+```
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        def getnext(needle):
+            next_list = [0] * len(needle)
+            j = 0
+            for i in range(1, len(needle)):
+                while j > 0 and needle[i]!=needle[j]:
+                    j = next_list[j-1]
+                if needle[i]==needle[j]:
+                    j+=1
+                next_list[i]=j
+            return next_list
+        
+        next_list = getnext(needle)
+        j = 0
+        for i in range(len(haystack)):
+            while j>0 and haystack[i]!=needle[j]:
+                j = next_list[j-1]
+            if haystack[i] == needle[j]:
+                j+=1
+            if j == len(needle):
+                return i-len(needle)+1
+        return -1
+```
