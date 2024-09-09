@@ -68,3 +68,29 @@ class Solution:
                 return i-len(needle)+1
         return -1
 ```
+
+## 459. [Repeated Substring Pattern](https://leetcode.com/problems/repeated-substring-pattern/description/)
+
+[Course Link](https://programmercarl.com/0459.%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
+
+感觉也不容易，主要是应用KMP，然后找到规律，字符串长度减去 next（tmp）数组的最后一个值就是单个子字符串的长度，这个长度需要能被 tmp 最后一个值整除，并且注意 tmp 最后一个值不能是0，否则相当于字符串内没有重复。
+
+```
+class Solution:
+    def repeatedSubstringPattern(self, s: str) -> bool:
+        def getnext(s):
+            tmp = [0] * len(s)
+            j = 0
+            for i in range(1, len(s)):
+                while j>0 and s[i]!=s[j]:
+                    j = tmp[j-1]
+                if s[i]==s[j]:
+                    j+=1
+                tmp[i]=j
+            return tmp
+        
+        tmp = getnext(s)
+        if tmp[-1]!=0 and tmp[-1]%(len(s)-tmp[-1])==0:
+            return True
+        return False
+```
