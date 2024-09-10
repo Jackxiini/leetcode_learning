@@ -59,3 +59,35 @@ class Solution:
         dfs(root)
         return res
 ```
+## 层序遍历
+[Course Link](https://programmercarl.com/0102.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86.html)
+
+一种写法可以解很多题，关键是用队列记录每一层的node
+## 102. [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/description/)
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        from collections import deque
+        if not root:
+            return 
+        que = deque([root])
+        res = []
+        while que:
+            tmp = []
+            size = len(que)
+            for _ in range(size):
+                node = que.pop()
+                tmp.append(node.val)
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+            res.append(tmp)
+        return res
+```
