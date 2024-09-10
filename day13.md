@@ -91,3 +91,31 @@ class Solution:
             res.append(tmp)
         return res
 ```
+## 107. [Binary Tree Level Order Traversal II](https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/)
+实际上就是上一题取个反
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
+        from collections import deque
+        if not root:
+            return
+        res = []
+        que = deque([root])
+        while que:
+            level = []
+            for _ in range(len(que)):
+                node = que.pop()
+                level.append(node.val)
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+            res.append(level)
+        return res[::-1]
+```
