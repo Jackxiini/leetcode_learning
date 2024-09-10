@@ -262,3 +262,92 @@ class Solution:
                     que.appendleft(node.right)
         return root
 ```
+## 117.[Populating Next Right Pointers in Each Node II](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/description/)
+虽然是不一样的树，但是和上一题是一模一样的解法
+```
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        from collections import deque
+        if not root:
+            return
+        que = deque([root])
+        while que:
+            pre = None
+            size = len(que)
+            for _ in range(size):
+                node = que.pop()
+                if pre:
+                    pre.next = node
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+                pre = node
+        return root
+```
+## 104.[Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/)
+很简单，只需要记录循环多少次即可
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        from collections import deque
+        depth = 0
+        if not root:
+            return depth
+        que = deque([root])
+        while que:
+            size = len(que)
+            for _ in range(size):
+                node = que.pop()
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+            depth+=1
+        return depth
+```
+## 111.[Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
+左右孩都是空的时候说明到达最小深度了
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        from collections import deque
+        depth = 0
+        if not root:
+            return depth
+        que = deque([root])
+        while que:
+            depth += 1
+            size = len(que)
+            for _ in range(size):
+                node = que.pop()
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+                if not (node.right or node.left):
+                    return depth
+        return depth
+```
