@@ -119,3 +119,56 @@ class Solution:
             res.append(level)
         return res[::-1]
 ```
+## 199. [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/description/)
+实际上就是取每一层的最后一个值
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        from collections import deque
+        if not root:
+            return 
+        que = deque([root])
+        res = []
+        while que:
+            for _ in range(len(que)):
+                node = que.pop()
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+            res.append(node.val)
+        return res
+```
+## 637. [Average of Levels in Binary Tree](https://leetcode.com/problems/average-of-levels-in-binary-tree/description/)
+取每一层的平均
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        from collections import deque
+        que = deque([root])
+        res = []
+        while que:
+            level = 0
+            size = len(que)
+            for _ in range(size):
+                node = que.pop()
+                level+=node.val
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+            res.append(round(level/size, 5))
+        return res
+```
