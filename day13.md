@@ -230,6 +230,7 @@ class Solution:
         return res
 ```
 ## 116.[Populating Next Right Pointers in Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/)
+需要注意存前一个node，才能指向当前node
 ```
 """
 # Definition for a Node.
@@ -259,6 +260,5 @@ class Solution:
                     que.appendleft(node.left)
                 if node.right:
                     que.appendleft(node.right)
-            node.next = None
         return root
 ```
