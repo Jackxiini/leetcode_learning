@@ -172,3 +172,93 @@ class Solution:
             res.append(round(level/size, 5))
         return res
 ```
+## 429.[N-ary Tree Level Order Traversal](https://leetcode.com/problems/n-ary-tree-level-order-traversal/description/)
+小改一下层序遍历里的left，right，遍历children即可
+```
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: Optional[int] = None, children: Optional[List['Node']] = None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        from collections import deque
+        if not root:
+            return
+        que = deque([root])
+        res = []
+        while que:
+            level = []
+            for _ in range(len(que)):
+                node = que.pop()
+                level.append(node.val)
+                for i in node.children:
+                    que.appendleft(i)
+            res.append(level)
+        return res
+```
+## 515.[Find Largest Value in Each Tree Row](https://leetcode.com/problems/find-largest-value-in-each-tree-row/description/)
+存每一层的最大值
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def largestValues(self, root: Optional[TreeNode]) -> List[int]:
+        from collections import deque
+        if not root:
+            return 
+        que = deque([root])
+        res = []
+        while que:
+            max_val = float('-inf')
+            for _ in range(len(que)):
+                node = que.pop()
+                if node.val > max_val:
+                    max_val = node.val
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+            res.append(max_val)
+        return res
+```
+## 116.[Populating Next Right Pointers in Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/)
+```
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        from collections import deque
+        if not root:
+            return
+        que = deque([root])
+        while que:
+            pre = None
+            size = len(que)
+            for i in range(size):
+                node = que.pop()
+                if i!=0:
+                    pre.next = node
+                pre = node
+                if node.left:
+                    que.appendleft(node.left)
+                if node.right:
+                    que.appendleft(node.right)
+            node.next = None
+        return root
+```
