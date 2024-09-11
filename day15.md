@@ -100,3 +100,28 @@ class Solution:
 [Course Link](https://programmercarl.com/0222.%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0.html#%E6%80%9D%E8%B7%AF)
 
 可以用层序遍历或者递归遍历每一个节点来算个数但是这样时间复杂度就是 O(n)了不满足题目要求（小于O(n)）
+
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def countNodes(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        left_depth = right_depth = 0
+        left = root.left
+        right = root.right
+        while left:
+            left = left.left
+            left_depth += 1
+        while right:
+            right = right.right
+            right_depth += 1
+        if left_depth == right_depth:
+            return (2 << left_depth) -1
+        return self.countNodes(root.left) + self.countNodes(root.right) + 1
+```
