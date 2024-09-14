@@ -106,7 +106,7 @@ class Solution:
 
 [Course Link](https://programmercarl.com/0236.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
 
-挺困难，关键思想是用后续遍历来回溯，遇到 p 或者 q 就返回 p 或者 q，如果两个都碰到了就返回 node 
+挺困难，关键思想是用后续遍历来回溯，遇到 p 或者 q 就返回当前的 node，步步倒退如果遇到了某个 node 能接收到两个退回来的 node，就返回当前 node
 
 ```
 # Definition for a binary tree node.
