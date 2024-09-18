@@ -85,3 +85,31 @@ class Solution:
         node.right = self.sortedArrayToBST(num_right)
         return node
 ```
+
+## 538. [Convert BST to Greater Tree](https://leetcode.com/problems/convert-bst-to-greater-tree/)
+
+[Course Link](https://programmercarl.com/0538.%E6%8A%8A%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E8%BD%AC%E6%8D%A2%E4%B8%BA%E7%B4%AF%E5%8A%A0%E6%A0%91.html#%E6%80%9D%E8%B7%AF)
+
+用中序遍历，但是用反过来顺序的中序遍历（右中左），可以在 BST 中从大到小遍历，每次都记录叠加的值
+
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def __init__(self):
+        self.cur_val = 0
+
+    def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return
+        self.convertBST(root.right)
+        root.val = self.cur_val + root.val
+        self.cur_val = root.val
+        self.convertBST(root.left)
+
+        return root
+```
