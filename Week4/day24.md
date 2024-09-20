@@ -28,3 +28,49 @@ class Solution:
         self.backtracking(s, res, [], 0)
         return res
 ```
+
+## 78. [Subsets](https://leetcode.com/problems/subsets/)
+
+[Course Link](https://programmercarl.com/0078.%E5%AD%90%E9%9B%86.html)
+
+子集问题，就是画树状图然后遍历整个树，获取整个树里的每个节点结果
+
+```
+class Solution:
+    def backtracking(self, nums, res, comb):
+        res.append(comb[:])
+
+        for i in range(len(nums)):
+            comb.append(nums[i])
+            self.backtracking(nums[i+1:], res, comb)
+            comb.pop()
+
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        self.backtracking(nums, res, [])
+        return res
+```
+
+## 90. [Subsets II](https://leetcode.com/problems/subsets-ii/)
+
+[Course Link](https://programmercarl.com/0090.%E5%AD%90%E9%9B%86II.html)
+
+LC 40 和 78 的结合，如果用 78 的方法，那么结果会有重复，因为数组里有重复数字，所以需要先排序，在遇到前一个数和当前数一样的情况下直接跳过
+
+```
+class Solution:
+    def backtracking(self, nums, res, comb):
+        res.append(comb[:])
+        for i in range(len(nums)):
+            if i > 0 and nums[i-1] == nums[i]:
+                continue
+            comb.append(nums[i])
+            self.backtracking(nums[i+1:], res, comb)
+            comb.pop()
+
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        nums.sort()
+        self.backtracking(nums, res, [])
+        return res
+```
