@@ -81,3 +81,44 @@ class Solution:
         self.backtracking(nums, res, [], set(), leng)
         return res
 ```
+
+# 51. [N-Queens](https://leetcode.com/problems/n-queens/)
+
+[Course Link](https://programmercarl.com/0051.N%E7%9A%87%E5%90%8E.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E8%A1%A5%E5%85%85)
+
+N皇后问题，每次操作一行，摆一个皇后，然后检查棋盘上是否有冲突，如果有那么往后挪位子继续试，直到摆完N个皇后，也没有冲突，才放进结果集。
+自己想明白写了一遍，和链接里的思路一样但是写法有点区别。再刷可以精进一下。
+
+```
+class Solution:
+    def isValid(self, index, n, board):
+        if not board:
+            return True
+        n_row = len(board)
+        for i in range(n_row):
+            if board[n_row-i-1][index] == 'Q':
+                return False
+            if index-i-1 >=0 and board[n_row-i-1][index-i-1] == 'Q':
+                return False
+            if index+i+1 < n and board[n_row-i-1][index+i+1]  == 'Q':
+                return False
+        return True
+
+    def backtracking(self, n, row, res, board):
+        if row == n:
+            res.append(board[:])
+            return
+
+        for col in range(n):
+            if self.isValid(col, n, board):
+                cur_row = ['.']*n
+                cur_row[col] = 'Q'
+                board.append(''.join(cur_row))
+                self.backtracking(n, row+1, res, board)
+                board.pop()
+
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        self.backtracking(n, 0, res, [])
+        return res
+```
