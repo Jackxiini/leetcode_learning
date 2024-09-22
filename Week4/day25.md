@@ -82,6 +82,37 @@ class Solution:
         return res
 ```
 
+## 332. [Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/)
+
+[Course Link](https://programmercarl.com/0332.%E9%87%8D%E6%96%B0%E5%AE%89%E6%8E%92%E8%A1%8C%E7%A8%8B.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE)
+
+第一眼看上去是懵逼的，想不到回溯能怎么解决这个问题。
+回头有空再看一下解法
+
+```
+from collections import defaultdict
+class Solution:
+    def __init__(self):
+        self.route = defaultdict(list)
+
+    def dfs(self, depart, res):
+        while depart in self.route and len(self.route[depart]) > 0:
+            arriv = self.route[depart][0]
+            self.route[depart].pop(0)
+            self.dfs(arriv, res)
+        res.append(depart)
+
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        tickets.sort(key=lambda x:x[1])
+        for depart, arriv in tickets:
+            self.route[depart].append(arriv)
+        
+        res = []
+        self.dfs('JFK', res)
+        
+        return res[::-1]
+```
+
 # 51. [N-Queens](https://leetcode.com/problems/n-queens/)
 
 [Course Link](https://programmercarl.com/0051.N%E7%9A%87%E5%90%8E.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E8%A1%A5%E5%85%85)
@@ -122,3 +153,48 @@ class Solution:
         self.backtracking(n, 0, res, [])
         return res
 ```
+
+## 37. [Sudoku Solver](https://leetcode.com/problems/sudoku-solver/)
+
+[Course Link](https://programmercarl.com/0037.%E8%A7%A3%E6%95%B0%E7%8B%AC.html#%E6%80%9D%E8%B7%AF)
+
+解数独，很难，关键是需要用二维递归，遍历 row 再遍历 column，然后递归，而且要注意调用递归函数要返回 bool（而且只有一个答案，不需要记录不同的答案），这样才能知道这一组是否找到了合适的值，从而回溯。
+
+```
+class Solution:
+    def isValid(self, board, row, col, val):
+        for i in range(9): # check row and col
+            if board[row][i] == str(val):
+                return False
+            if board[i][col] == str(val):
+                return False
+        block_row = row // 3
+        block_col = col // 3
+        for i in range(3*block_row, 3*block_row+3):
+            for j in range(3*block_col, 3*block_col+3):
+                if board[i][j] == str(val):
+                    return False
+        return True
+
+    def backtracking(self, board):
+        for row in range(9):
+            for col in range(9):
+                if board[row][col] != ".": 
+                    continue
+                for i in range(1,10):
+                    if self.isValid(board, row, col, i): 
+                        board[row][col] = str(i)
+                        if self.backtracking(board): return True
+                        board[row][col] = "."
+                return False
+        return True
+
+        
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        self.backtracking(board)
+```
+
+虽然可以解决问题，但是貌似不是最优的解法，还能进一步提速，再刷再看。
