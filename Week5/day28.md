@@ -55,3 +55,22 @@ class Solution:
                 cur_dest = far_dest
         return res
 ```
+## 1005. [Maximize Sum Of Array After K Negations](https://leetcode.com/problems/maximize-sum-of-array-after-k-negations/)
+
+[Course Link](https://programmercarl.com/1005.K%E6%AC%A1%E5%8F%96%E5%8F%8D%E5%90%8E%E6%9C%80%E5%A4%A7%E5%8C%96%E7%9A%84%E6%95%B0%E7%BB%84%E5%92%8C.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
+
+直觉上来说，按照绝对值从大到小排序，然后把负数按大到小翻转变正，如果还多出来 k，看 k 是不是奇数，是奇数就把最小的那个值（一定在数组最右边）变负。
+
+```
+class Solution:
+    def largestSumAfterKNegations(self, nums: List[int], k: int) -> int:
+        nums.sort(key=lambda x:abs(x), reverse=True)
+        for i in range(len(nums)):
+            if k > 0 and nums[i] < 0:
+                nums[i] *= -1
+                k -= 1
+        if k % 2==1:
+            nums[-1] *= -1
+            
+        return sum(nums)
+```
