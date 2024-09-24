@@ -36,4 +36,22 @@ class Solution:
         return True
 ```
 
-## 45. 
+## 45. [Jump Game II](https://leetcode.com/problems/jump-game-ii/description/)
+
+[Course Link](https://programmercarl.com/0045.%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8FII.html#%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC)
+
+比前一题难得多，贪心在每次在 cover 范围里找到能 cover 最远的那个节点继续走
+
+```
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        cur_dest = 0
+        far_dest = 0
+        res = 0
+        for i in range(len(nums)-1):
+            far_dest = max(far_dest, nums[i]+i)
+            if i == cur_dest:
+                res+=1
+                cur_dest = far_dest
+        return res
+```
