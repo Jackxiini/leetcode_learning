@@ -100,3 +100,19 @@ class Solution:
                     return False
         return True
 ```
+## 406.[Queue Reconstruction by Height](https://leetcode.com/problems/queue-reconstruction-by-height/)
+
+[Course Link](https://programmercarl.com/0406.%E6%A0%B9%E6%8D%AE%E8%BA%AB%E9%AB%98%E9%87%8D%E5%BB%BA%E9%98%9F%E5%88%97.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE)
+
+挺巧妙的，按照身高（h）由高到低排序，同时同样身高的按照前面有几个人（k）由低到高排序。思想是高个子先排队站前面，矮个子后排队站后面。因为先操作高的，所以哪怕后面矮个子遇到 k 小的，因为后操作也会排到同样 k 的高个子前面。
+
+```
+class Solution:
+    def reconstructQueue(self, people: List[List[int]]) -> List[List[int]]:
+        people.sort(key=lambda x:(-x[0],x[1]))
+        res = []
+
+        for i in range(len(people)):
+            res.insert(people[i][1], people[i])
+        return res
+```
