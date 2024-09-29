@@ -99,5 +99,39 @@ class Solution:
         elif n % 3 != 1:
             return (3**(n//3)) * max((n%3),1)
         else:
-            return 3**(n//3-1) * (n%3+3) 
+            return 3**(n//3-1) * (n%3+3)
+```
+
+那么怎么用 DP 解这题呢？当前数的最大值一定是它切分数的最大值和余数乘积的最大值。例如，9 的最大值是 6 的最大值乘以余数 3（或者 1  乘以本身或者 6 乘以 3，这三个中的最大值），因此我们需要遍历来获取比 9 小的数的最大值，来找到 9 的最大值。
+
+```
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        dp = [0] * (n+1)
+        dp[2] = 1
+        for i in range(3, n+1):
+            for j in range(1, i//2+1):
+                dp[i] = max(dp[i-j]*j, j*(i-j), dp[i])
+        return dp[n]
+```
+
+## 96. [Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/)
+
+[Course Link](https://programmercarl.com/0096.%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91.html#%E6%80%9D%E8%B7%AF)
+
+感觉难得很，不容易想明白。
+
+先从前三个数推导，n=1只有一种可能，根为1; n=2，有两种可能，根为 1 和 2; n=3，有五种可能，根为 1 到 3。从这三个例子可以发现，树的 root 是 1到 n，因为是 BST，因此每种数字作为根的可能性是左边数量的可能性乘以右边数量的可能性（什么意思呢？举个例子，n=3，根这时候取 1，那么左边一定没有子树（也就是无数可用），右边可以用两个数，这两个数能有多少种树的可能性？就是 n=2 的情况的答案。以此类推，根是 2，左边有一个数，右边也有一个数，两边都是 n=1 的可能性，根是 3，左边两个数，右边没有数，左边是 n=2 的可能性，再把这三个根的可能性相加就是 n=3 的可能性）
+
+“右边可以用两个数，这两个数能有多少种树的可能性？就是 n=2 的情况的答案。” 这里可能会想不明白，为什么右边可用两个数，就是 n=2 的答案，这俩数不一定是 1 和 2 啊。其实不用管数字是多少，只要知道有两个比根大的数就行，打个比方 [1,2] 这俩数能组成的树的可能性是和 [4,5] 这俩数能组成的树的可能性是一样的。
+
+```
+class Solution:
+    def numTrees(self, n: int) -> int:
+        dp = [0] * (n+1)
+        dp[0] = 1
+        for i in range(1, n+1):
+            for j in range(1, i+1):
+                dp[i] += dp[i-j] * dp[j-1]
+        return dp[-1]
 ```
