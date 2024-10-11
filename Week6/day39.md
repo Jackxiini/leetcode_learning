@@ -38,3 +38,21 @@ class Solution:
 ## 123. [Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
 
 [Course Link](https://programmercarl.com/0123.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAIII.html)
+
+现在可以买卖两次。这时候状态就会变成5种，不操作，第一次持有，第一次不持有，第二次持有，第二次不持有。这里之所以用持有这个词，是因为状态想表达的是当天手里是否有这支股票。例如第一次持有，可以是昨天就持有着了，今天继续持有，也可以是今天才买入（也就是前一天无操作，注意这里可能有疑惑，为什么不能是前一天卖出，今天再买入？因为这种情况是第二次持有，第一次持有一定是之前没有持有过，也就是之前没有操作）。
+那么就好办了，dp 里的值还是指代手里有的现金价值（可以是负数），然后五种状态：一种状态是不操作 (dp[0]，不操作那么都是0)，然后是第一次持有 (dp[1]，肯定是 max(昨天无操作减去今天买入的股价，昨天就持有的价值))，然后第一次不持有 (dp[2]，max(昨天买入今天卖出的收益，昨天就卖出的价值))，然后第二次不持有 (dp[3]，max(昨天不持有的收益减去今天买入的值，昨天就持有的价值))，最后第二次不持有 (dp[4]，max(昨天买入今天卖出的收益，昨天就卖出的价值))。
+因为可以一天多次买卖，所以第一天初始化时候，第二次持有的价值和第一次持有是一样的，相当于今天买入 (dp[1]) 卖出 (dp[2]) 再买入 (dp[3]) ，然后还能再卖出 (dp[4])。
+
+```
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        dp = [0]*5
+        dp[1] = -prices[0]
+        dp[3] = -prices[0]
+        for price in prices:
+            dp[1] = max(dp[1], dp[0]-price)
+            dp[2] = max(dp[2], dp[1]+price)
+            dp[3] = max(dp[3], dp[2]-price)
+            dp[4] = max(dp[4], dp[3]+price)
+        return dp[-1]
+```
