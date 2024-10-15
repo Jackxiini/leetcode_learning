@@ -22,3 +22,23 @@ class Solution:
                     dp[j][i] = dp[j][i-1]
         return dp[-1][-1]
 ```
+## 583. [Delete Operation for Two Strings](https://leetcode.com/problems/delete-operation-for-two-strings/)
+
+[Course Link](https://programmercarl.com/0583.%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE)
+
+首先想到的是这题可以先找到最长相同子序列，然后剩下的全删了就是答案。那么结果就是两条string的长度和减去两倍的最长相同子序列的长度。方法和 LC1143是一样的，只是结果小小的计算一下即可。
+
+```
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        dp = [[0]*(len(word1)+1) for _ in range(len(word2)+1)]
+        for i in range(1, len(word1)+1):
+            for j in range(1, len(word2)+1):
+                if word1[i-1] == word2[j-1]:
+                    dp[j][i] = dp[j-1][i-1]+1
+                else:
+                    dp[j][i] = max(dp[j-1][i], dp[j][i-1])
+        return len(word1)+len(word2)-2*dp[-1][-1]
+```
+
+本题另一种解法就是
