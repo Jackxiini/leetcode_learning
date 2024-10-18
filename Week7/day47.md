@@ -43,3 +43,29 @@ class Solution:
             stack.append(i)
         return res
 ```
+
+## 84. [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
+
+[Course Link](https://programmercarl.com/0084.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E7%9F%A9%E5%BD%A2.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE)
+
+这题和上一题很像，但是要用单调递减的栈，因为我们需要用栈来记录比栈头小的元素（栈内元素），这样在遍历的时候，遇到比栈头小的柱子（栈外的），就可以往前推，不停的更新当前栈元素的最大 area。
+
+例如，24563...，栈内记录了 [0,1,2,3] （对应 2，4，5，6），我们遇到 3，就能知道当前情况下，最大面积一定在左边，因为加上比之前矮的 3 不会让面积变大。所以通过 pop 元素，我们就可以一个个比，先比 6，6 左边是 5，所以不能合上 5 一起算面积，所以这里面积是 6\*1=6。然后看 5，5可以合并6算面积，所以 5\*2=10，这里为什么知道 5 可以合并右边的，就是因为单调栈，用栈内记录的下标，就能轻松获取 2 这个宽度（4-1-1）。
+
+```
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        stack = []
+        heights.append(0)
+        res = 0
+        for i in range(len(heights)):
+            while stack and heights[i] < heights[stack[-1]]:
+                height = heights[stack.pop()]
+                w = i - stack[-1] - 1 if stack else i
+                area = height * w
+                res = max(area, res)
+            stack.append(i)
+        return res
+```
+
+这两题二刷要再仔细看。
