@@ -32,7 +32,7 @@ def join(u, v):
         father[root_v] = root_u
 ```
 
-## 107. [寻找存在的路径](https://kamacoder.com/problempage.php?pid=1179)
+## KC 107. [寻找存在的路径](https://kamacoder.com/problempage.php?pid=1179)
 
 [Course Link](https://www.programmercarl.com/kamacoder/0107.%E5%AF%BB%E6%89%BE%E5%AD%98%E5%9C%A8%E7%9A%84%E8%B7%AF%E5%BE%84.html#%E6%80%9D%E8%B7%AF)
 
