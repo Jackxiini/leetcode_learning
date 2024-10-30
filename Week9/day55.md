@@ -1,4 +1,4 @@
-# 代码随想录 Day54
+# 代码随想录 Day55
 
 ### [prim算法精讲](https://www.programmercarl.com/kamacoder/0053.%E5%AF%BB%E5%AE%9D-prim.html#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF)
 
