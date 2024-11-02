@@ -1,6 +1,6 @@
 # 代码随想录 Day59
 
-### [队列优化 Bellman-Ford](https://www.programmercarl.com/kamacoder/0094.%E5%9F%8E%E5%B8%82%E9%97%B4%E8%B4%A7%E7%89%A9%E8%BF%90%E8%BE%93I-SPFA.html#%E8%83%8C%E6%99%AF)
+### [队列优化 Bellman-Ford -- SPFA](https://www.programmercarl.com/kamacoder/0094.%E5%9F%8E%E5%B8%82%E9%97%B4%E8%B4%A7%E7%89%A9%E8%BF%90%E8%BE%93I-SPFA.html#%E8%83%8C%E6%99%AF)
 
 由于对当前节点未能接触到的地方进行更新都是无用功，因此我们跳过那些还不能接触到的节点，实现上可以用队列，类似于 BFS 的操作。
 
@@ -103,3 +103,40 @@ if __name__ == "__main__":
 [Course Link](https://www.programmercarl.com/kamacoder/0096.%E5%9F%8E%E5%B8%82%E9%97%B4%E8%B4%A7%E7%89%A9%E8%BF%90%E8%BE%93III.html#%E6%80%9D%E8%B7%AF)
 
 最多只能经过 k 个城市，而不是之前的无限制。
+
+如果没有限制，那么我们相当于是松弛了 n - 1 次后的结果（如果有 n 个节点，那么 n - 1 条边，对所有边松弛一次，相当于计算 起点到达 与起点一条边相连的节点 的最短距离，那么对所有边松弛 k + 1次，就是求 起点到达 与起点k + 1条边相连的节点的 最短距离）。这题感觉有点文字游戏了，经过 k 个城市，所以是松弛了 k + 1 次边（起点不算经过，到达也不算）。
+
+但这里要注意的是，我们不能简单的将循环的 n - 1 改成 k + 1 了事，因为每次循环时，当前节点的计算会依赖于上一个节点计算（同一个循环内的），而这对于本题的限制是不行的，所以我们需要记录一下上一个循环的 dist 表。
+
+```
+def bellman_ford(src, k, edges, n):
+    dist = [float('inf')] * (n+1)
+    dist[src] = 0
+    
+    for _ in range(k + 1):
+        pre_dist = dist[:]
+        for u, v, weight in edges:
+            if pre_dist[u] != float('inf') and dist[v] > pre_dist[u] + weight:
+                dist[v] = pre_dist[u] + weight
+    
+    return dist
+        
+    
+if __name__ == "__main__":
+    n, m = map(int, input().strip().split())
+    edges = []
+    for _ in range(m):
+        u, v, weight = map(int, input().strip().split())
+        edges.append((u, v, weight))
+        
+    src, dst, k = map(int, input().strip().split())
+    
+    dist = bellman_ford(src, k, edges, n)
+    
+    if dist[dst] == float('inf'):
+        print("unreachable")
+    else:
+        print(dist[dst])
+```
+
+SPFA 法同样可以解这个，但是我这里没做，可以看链接学习。
