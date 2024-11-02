@@ -53,5 +53,40 @@ if __name__ == "__main__":
 ```
 
 ### [A* 算法](https://www.programmercarl.com/kamacoder/0126.%E9%AA%91%E5%A3%AB%E7%9A%84%E6%94%BB%E5%87%BBastar.html)
+```
+import heapq
 
+BOARD_SIZE = 1000
+MOVES = [(2, 1), (2, -1), (-2, 1), (-2, -1), (1, 2), (1, -2), (-1, 2), (-1, -2)]
+
+def eulidean(x1, x2, y1, y2):
+    return ((x1 - x2)**2 + (y1 - y2)**2)**0.5
+
+def A_star(a1, a2, b1, b2):
+    que = []
+    heapq.heappush(que, (0, 0, a1, a2))
+    visited = set((a1, a2))
+    while que:
+        cost, move, start_x, start_y = heapq.heappop(que)
+        if (start_x, start_y) == (b1, b2):
+            return move
+        
+        for dx, dy in MOVES:
+            next_x = start_x + dx
+            next_y = start_y + dy
+            
+            if 1 <= next_x <= BOARD_SIZE and 1 <= next_y <= BOARD_SIZE and (next_x, next_y) not in visited:
+                visited.add((next_x, next_y))
+                new_move = move + 1
+                new_cost = new_move + eulidean(next_x, b1, next_y, b2)
+                heapq.heappush(que, (new_cost, new_move, next_x, next_y))
+    
+    return -1
+
+if __name__ == "__main__":
+    n = int(input())
+    for _ in range(n):
+        a1, a2, b1, b2 = map(int, input().strip().split())
+        print(A_star(a1, a2, b1, b2))
+```
 完结！
