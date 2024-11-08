@@ -45,7 +45,7 @@ class Solution:
 
 ## 34. [Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
-用二分法，这个还不是很熟练，还得再想想
+用二分法，两个function分别求左右边界。和一般的二分法找到 target = mid 即是结果不同，如果我们找到相同，依旧左滑或者右滑边界，就可以找到子序列的边界
 
 ```
 class Solution:
